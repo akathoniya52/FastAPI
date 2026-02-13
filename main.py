@@ -1,5 +1,5 @@
 """FastAPI application - modular entry point."""
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, requests
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 
@@ -63,3 +63,25 @@ if __name__ == "__main__":
     load_dotenv()
     PORT = os.getenv('PORT')
     uvicorn.run("main:app", host="0.0.0.0", port=int(PORT), reload=True)
+
+    
+    import time
+    import requests
+
+    URL = "https://fastapi-c2ep.onrender.com"
+    print("Starting server keep alive...","URL:", URL)
+    while True:
+        print("Checking server...")
+
+        try:
+            response = requests.get(URL)
+
+            if response.status_code == 200:
+                print("✅ Server is alive")
+            else:
+                print(f"⚠️ Server responded with: {response.status_code}")
+
+        except requests.exceptions.RequestException as e:
+            print(f"❌ Error connecting to server: {e}")
+
+        time.sleep(10)
