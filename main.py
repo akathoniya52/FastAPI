@@ -54,3 +54,12 @@ def sync_products_sequence():
 def on_startup():
     """Sync products id sequence on app startup."""
     sync_products_sequence()
+
+
+if __name__ == "__main__":
+    import os
+    from dotenv import load_dotenv
+    import uvicorn
+    load_dotenv()
+    PORT = os.getenv('PORT')
+    uvicorn.run("main:app", host="0.0.0.0", port=int(PORT), reload=True)
